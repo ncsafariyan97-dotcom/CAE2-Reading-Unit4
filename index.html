@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Fast Track to Burnout - Interactive Slides</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .presentation {
+            width: 100%;
+            max-width: 1000px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 600px;
+            max-height: 90vh;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+            color: white;
+            padding: 24px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-bottom: 4px;
+        }
+        .header-main {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        .slide-counter {
+            background: rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .slide-area {
+            flex: 1;
+            padding: 32px;
+            overflow-y: auto;
+        }
+        .slide-title {
+            font-size: 24px;
+            color: #1e3a5f;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .nav-bar {
+            padding: 16px 32px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-btn {
+            padding: 10px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: none;
+        }
+        .nav-btn.primary {
+            background: #1e3a5f;
+            color: white;
+        }
+        .nav-btn.secondary {
+            background: white;
+            color: #1e3a5f;
+            border: 1px solid #1e3a5f;
+        }
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .dots {
+            display: flex;
+            gap: 8px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ccc;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .dot.active {
+            background: #1e3a5f;
+        }
+        
+        /* Slide 1 - Reading Text Styles */
+        .reading-intro {
+            background: #e8f4f8;
+            padding: 16px 20px;
+            border-radius: 10px;
+            border-left: 4px solid #2d5a87;
+            margin-bottom: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .reading-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .reading-card {
+            background: #fff;
+            border: 2px solid #e3f2fd;
+            border-radius: 12px;
+            padding: 20px;
+            font-size: 14px;
+            line-height: 1.7;
+            color: #444;
+        }
+        .reading-card h3 {
+            color: #1565c0;
+            margin-bottom: 10px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .badge {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .badge-a { background: #2196f3; }
+        .badge-b { background: #e91e63; }
+        .badge-c { background: #4caf50; }
+        .badge-d { background: #ff9800; }
+        .reading-card blockquote {
+            margin: 10px 0 0 0;
+            padding-left: 14px;
+            border-left: 3px solid #ddd;
+            font-style: italic;
+            color: #666;
+        }
+        
+        /* Other slide styles */
+        .vocab-item {
+            background: #f5f5f5;
+            padding: 14px 20px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .vocab-word {
+            font-weight: 700;
+            color: #1e3a5f;
+        }
+        .vocab-type {
+            color: #888;
+            font-size: 12px;
+            margin-left: 6px;
+        }
+        .vocab-meaning {
+            color: #555;
+            font-size: 14px;
+        }
+        .tip-box {
+            background: #fef9e7;
+            padding: 14px 18px;
+            border-radius: 8px;
+            border-left: 4px solid #f1c40f;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+        .question-box {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+        }
+        .question-box ol {
+            padding-left: 20px;
+            color: #333;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+        .match-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 14px;
+        }
+        .match-cell {
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+        .debate-box {
+            background: #fce4ec;
+            padding: 16px 20px;
+            border-radius: 10px;
+            border-left: 4px solid #e91e63;
+            margin-top: 14px;
+        }
+        .writing-card {
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 14px;
+        }
+        .writing-card h4 {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background: #1e3a5f;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #fafafa;
+        }
+        .takeaway-hero {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .col-box {
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+        .col-box ul {
+            padding-left: 18px;
+            margin-top: 8px;
+            line-height: 1.7;
+        }
+        @media (max-width: 768px) {
+            .reading-grid, .two-col, .match-grid { grid-template-columns: 1fr; }
+            .slide-area { padding: 20px; }
+            .header { padding: 16px 20px; }
+            .header-main { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="presentation">
+    <div class="header">
+        <div>
+            <div class="header-title">CAE Reading • Work Time</div>
+            <div class="header-main">The Fast Track to Burnout</div>
+        </div>
+        <div class="slide-counter" id="counter">1 / 7</div>
+    </div>
+
+    <div class="slide-area" id="content"></div>
+
+    <div class="nav-bar">
+        <button class="nav-btn secondary" id="btnPrev" onclick="prevSlide()">← Previous</button>
+        <div class="dots" id="dots"></div>
+        <button class="nav-btn primary" id="btnNext" onclick="nextSlide()">Next →</button>
+    </div>
+</div>
+
+<script>
+const slides = [
+    {
+        title: "Reading Text",
+        html: `
+            <div class="reading-intro">
+                <strong>The Fast Track to Burnout</strong> — An increasing number of young executives are giving up their corporate positions after experiencing an overload of pressure and dissatisfaction with what they imagined would be a dream career. Kate Martins talks to four young people who turned their backs on high salaries and even higher expectations. Here's how to beat it.
+            </div>
+            <div class="reading-grid">
+                <div class="reading-card">
+                    <h3><span class="badge badge-a">A</span> Tanya Burrows</h3>
+                    <p>bears no grudge towards the corporation that rewarded her with five promotions within the same number of years. 'At twenty-seven, I was able to buy my own luxury apartment,' she says. 'For that reason I'll always be grateful to them.' Tanya admits that the high salary that came with each promotion was irresistible. 'We weren't poor but I don't think my parents ever bought anything that wasn't secondhand. That definitely played a role in my motivation. When someone's saying you can negotiate your own salary, it's hard to say no.'</p>
+                    <p>So what changed for Tanya? 'Honestly, I got sick of the materialism. I got sucked in too at first – you'd make sure other people knew what designer labels you were wearing, that they could see your cell phone was top of the range ... but it just wore thin for me.' Tanya decided to quit and pursue her real passion for photography.</p>
+                    <blockquote>'It doesn't offer much financial security as you don't know when you'll get your next contract, but I get to work in far more inspiring environments.'</blockquote>
+                </div>
+                <div class="reading-card">
+                    <h3><span class="badge badge-b">B</span> Lily Tan</h3>
+                    <p>left university with an MBA distinction and was quickly snapped up by a major retail chain. In just five years she achieved a senior management position and after receiving news of the promotion she was elated. 'I rang round just about everyone I could think of,' she laughs. 'But the next day I felt nothing. I had no inclination to get out of bed and face the constant pressure.'</p>
+                    <p>Despite her sudden disillusionment, she continued to persevere and was the brains behind a new strategy. 'Everyone seemed to be in favour of it at the planning stage,' she says. But during the implementation stage, unforeseen problems arose and eventually the strategy was abandoned. Lily's next performance appraisal gave her a really low rating which she found devastating. 'The whole experience was quite traumatizing and I was too emotionally immature to deal with it.'</p>
+                    <p>It wasn't long before Lily left and set up her own recruitment company which is now flourishing. She still regrets her discovery that there is no such thing as team spirit when one of the members makes a mistake.</p>
+                </div>
+                <div class="reading-card">
+                    <h3><span class="badge badge-c">C</span> Jane Dawson</h3>
+                    <p>graduated top of her class in a Bachelor of Business (Finance) degree and was offered a contract by three major investment companies. She accepted the one that was offering perks such as free tickets to major sporting events and a flash company car. Just like the three other young high-flyers in these interviews, Jane's potential for leadership was quickly noted and she found herself promoted to team leader within six months. But, exceptionally, in her case, she had already been looking for an escape route.</p>
+                    <p>'Sure it was good money but the hours were ridiculous. I felt I should have been carefree at that age but the burden of responsibility was enormous. I felt trapped.' Despite the fact that she'd been elevated to senior analyst, Jane still felt anonymous within the giant corporation. 'It was a real feeling of being the small cog in a big machine. Nothing I did really mattered.'</p>
+                    <p>She forced herself to stay on for another year, but then nervously asked for a sabbatical. To her amazement, her department head agreed. She spent the year travelling and working on community projects in developing countries. By the time Jane was due to return, she knew she was in the wrong job. She applied to work for an aid organization, where she says 'At last I feel I'm doing something worthwhile.'</p>
+                </div>
+                <div class="reading-card">
+                    <h3><span class="badge badge-d">D</span> Natalie Copeland</h3>
+                    <p>was signed up to work for a leading PR consultancy. She admits to being a perfectionist, an attribute which saw her rise through the ranks in no time. 'It's a weakness, too,' she says. 'It can mean that you're reluctant to delegate and end up with the pressure of doing it all yourself.' For the first few years, however, she had no problem with overtime and her performance appraisals were almost always flawless.</p>
+                    <p>But Natalie feels she committed 'career-suicide' by opting to getting married and have a child at twenty-five. 'My colleagues seemed utterly mystified and tried to talk me out of it.' And on her return to work Natalie felt instant resentment towards her. 'I had to leave promptly at the end of the working day to take care of my daughter Anita but would come in an hour early and work through my lunch hour. It made no difference,' she explains. 'They simply alienated me.' By this she means that workmates were reluctant to update her on recent developments and withheld vital information on new projects.</p>
+                    <p>With little support from her seniors either, and refusing to compromise her time with her family, Natalie handed in her notice and now works for a smaller PR company offering flexi-time.</p>
+                </div>
+            </div>
+        `
+    },
+    {
+        title: "Key Vocabulary & Collocations",
+        html: `
+            <div class="vocab-item">
+                <div><span class="vocab-word">bear no grudge</span> <span class="vocab-type">(phr v)</span></div>
+                <div class="vocab-meaning">to not feel angry about something in the past</div>
+            </div>
+            <div class="vocab-item">
+                <div><span class="vocab-word">wear thin</span> <span class="vocab-type">(phr v)</span></div>
+                <div class="vocab-meaning">to become less acceptable; to lose patience</div>
+            </div>
+            <div class="vocab-item">
+                <div><span class="vocab-word">snap up</span> <span class="vocab-type">(phr v)</span></div>
+                <div class="vocab-meaning">to buy or take something quickly before others</div>
+            </div>
+            <div class="vocab-item">
+                <div><span class="vocab-word">step into one's shoes</span> <span class="vocab-type">(idm)</span></div>
+                <div class="vocab-meaning">to take over someone's job or responsibilities</div>
+            </div>
+            <div class="vocab-item">
+                <div><span class="vocab-word">hand in one's notice</span> <span class="vocab-type">(phr v)</span></div>
+                <div class="vocab-meaning">to formally resign from a job</div>
+            </div>
+            <div class="vocab-item">
+                <div><span class="vocab-word">disillusionment</span> <span class="vocab-type">(n)</span></div>
+                <div class="vocab-meaning">disappointment from discovering something is not good</div>
+            </div>
+            <div class="vocab-item">
+                <div><span class="vocab-word">perks</span> <span class="vocab-type">(n pl)</span></div>
+                <div class="vocab-meaning">extra benefits in addition to salary</div>
+            </div>
+            <div class="tip-box">
+                <strong>💡 CAE Tip:</strong> Notice how phrasal verbs make the text more natural and magazine-like. Practice using them in your own writing!
+            </div>
+        `
+    },
+    {
+        title: "Comprehension Check",
+        html: `
+            <div class="question-box">
+                <h4 style="margin-bottom:12px;color:#1565c0;">📝 Answer these questions:</h4>
+                <ol>
+                    <li>What motivated Tanya to accept each promotion initially?</li>
+                    <li>Why did Lily feel "nothing" the day after her promotion?</li>
+                    <li>What does Jane mean by being a "small cog in a big machine"?</li>
+                    <li>How did Natalie's colleagues react when she returned from maternity leave?</li>
+                    <li>What do all four people have in common despite their different stories?</li>
+                </ol>
+            </div>
+            <div style="background:#fff8e1;padding:20px;border-radius:10px;border-left:4px solid #ffc107;">
+                <h4 style="margin-bottom:12px;color:#f57f17;">🔗 Matching Exercise</h4>
+                <p style="margin-bottom:10px;color:#555;font-size:14px;">Match the feeling to the correct person:</p>
+                <div class="match-grid">
+                    <div class="match-cell">1. Trapped & anonymous</div>
+                    <div class="match-cell">a) Tanya</div>
+                    <div class="match-cell">2. Sick of materialism</div>
+                    <div class="match-cell">b) Lily</div>
+                    <div class="match-cell">3. Traumatized by low rating</div>
+                    <div class="match-cell">c) Jane</div>
+                    <div class="match-cell">4. Alienated by colleagues</div>
+                    <div class="match-cell">d) Natalie</div>
+                </div>
+            </div>
+        `
+    },
+    {
+        title: "Discussion & Reaction",
+        html: `
+            <div style="background:#e8f5e9;padding:20px;border-radius:10px;border-left:4px solid #4caf50;margin-bottom:16px;">
+                <h4 style="margin-bottom:10px;color:#2e7d32;">💬 Reacting to the Text</h4>
+                <p style="color:#444;line-height:1.6;">Do you sympathize with any of the four young executives? Why or why not?</p>
+            </div>
+            <div style="background:#fff;border:2px solid #e0e0e0;border-radius:10px;padding:20px;margin-bottom:16px;">
+                <h4 style="margin-bottom:14px;color:#1e3a5f;">🎭 Imagine you were a young executive. How would you feel about:</h4>
+                <div style="display:grid;gap:12px;">
+                    <div style="display:flex;align-items:flex-start;gap:12px;">
+                        <span style="background:#1e3a5f;color:white;min-width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:bold;">1</span>
+                        <span style="color:#444;padding-top:3px;">Your colleagues showing off their wealth and possessions?</span>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:12px;">
+                        <span style="background:#1e3a5f;color:white;min-width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:bold;">2</span>
+                        <span style="color:#444;padding-top:3px;">A poor performance appraisal that you think is unfair?</span>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:12px;">
+                        <span style="background:#1e3a5f;color:white;min-width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:bold;">3</span>
+                        <span style="color:#444;padding-top:3px;">Working much longer hours than most people you know?</span>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:12px;">
+                        <span style="background:#1e3a5f;color:white;min-width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:bold;">4</span>
+                        <span style="color:#444;padding-top:3px;">Being excluded by people in your department?</span>
+                    </div>
+                </div>
+            </div>
+            <div class="debate-box">
+                <strong style="color:#c2185b;">🔥 Debate Topic:</strong> <span style="color:#555;">"Companies should be legally required to offer sabbaticals to prevent burnout." Do you agree?</span>
+            </div>
+        `
+    },
+    {
+        title: "Language Focus: Word Formation",
+        html: `
+            <div style="background:#f3e5f5;padding:20px;border-radius:10px;border-left:4px solid #9c27b0;margin-bottom:16px;">
+                <h4 style="margin-bottom:8px;color:#6a1b9a;">🧩 CAE Use of English Practice</h4>
+                <p style="margin:0;color:#555;font-size:14px;">Complete the table with the correct form of the word.</p>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Noun</th>
+                        <th>Adjective</th>
+                        <th>Adverb</th>
+                        <th>Verb</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>perfection</td>
+                        <td style="color:#1565c0;font-weight:600;">perfect</td>
+                        <td style="color:#1565c0;font-weight:600;">perfectly</td>
+                        <td style="color:#999;">—</td>
+                    </tr>
+                    <tr>
+                        <td style="color:#c2185b;font-weight:600;">?</td>
+                        <td>disillusioned</td>
+                        <td style="color:#c2185b;font-weight:600;">?</td>
+                        <td style="color:#c2185b;font-weight:600;">?</td>
+                    </tr>
+                    <tr>
+                        <td>motivation</td>
+                        <td style="color:#c2185b;font-weight:600;">?</td>
+                        <td style="color:#c2185b;font-weight:600;">?</td>
+                        <td>motivate</td>
+                    </tr>
+                    <tr>
+                        <td style="color:#c2185b;font-weight:600;">?</td>
+                        <td style="color:#c2185b;font-weight:600;">?</td>
+                        <td style="color:#c2185b;font-weight:600;">?</td>
+                        <td>persevere</td>
+                    </tr>
+                    <tr>
+                        <td>security</td>
+                        <td style="color:#c2185b;font-weight:600;">?</td>
+                        <td style="color:#c2185b;font-weight:600;">?</td>
+                        <td style="color:#999;">—</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="background:#e8f4f8;padding:16px 20px;border-radius:8px;margin-top:16px;">
+                <strong style="color:#1e3a5f;">✍️ Sentence Transformation:</strong>
+                <p style="margin:8px 0 0 0;color:#555;font-size:14px;font-style:italic;">"Natalie was reluctant to delegate tasks." → Natalie showed great __________ in delegating tasks. (RELUCTANT)</p>
+            </div>
+        `
+    },
+    {
+        title: "Writing Tasks",
+        html: `
+            <div style="background:#fff3e0;padding:20px;border-radius:10px;border-left:4px solid #ff9800;margin-bottom:14px;">
+                <h4 style="margin-bottom:10px;color:#e65100;">✏️ CAE Essay (Part 1)</h4>
+                <p style="margin:0;color:#444;line-height:1.6;">Your class has watched a lecture about workplace burnout. You have made the notes below:</p>
+                <ul style="margin:10px 0;color:#555;font-size:14px;">
+                    <li>High salaries do not guarantee happiness</li>
+                    <li>Work-life balance is more important than promotion</li>
+                    <li>Companies should change their culture</li>
+                </ul>
+                <p style="margin:0;color:#444;font-size:14px;">Write an essay discussing two of these points and say which is the most important.</p>
+            </div>
+            <div style="background:#e8f5e9;padding:20px;border-radius:10px;border-left:4px solid #4caf50;margin-bottom:14px;">
+                <h4 style="margin-bottom:10px;color:#2e7d32;">📋 Report / Proposal</h4>
+                <p style="margin:0;color:#444;font-size:14px;line-height:1.6;">The manager of a large corporation has asked you to write a report on how to reduce burnout among junior executives. Write your report in 220–260 words.</p>
+            </div>
+            <div style="background:#e3f2fd;padding:20px;border-radius:10px;border-left:4px solid #2196f3;">
+                <h4 style="margin-bottom:10px;color:#1565c0;">💌 Letter / Email</h4>
+                <p style="margin:0;color:#444;font-size:14px;line-height:1.6;">You recently read this article and decided to write a letter to the editor of the magazine expressing your views on whether young people today are too ambitious. Write your letter in 220–260 words.</p>
+            </div>
+        `
+    },
+    {
+        title: "Summary & Takeaways",
+        html: `
+            <div class="takeaway-hero">
+                <h3 style="margin:0 0 12px 0;font-size:20px;">🎯 Key Takeaways</h3>
+                <p style="margin:0;opacity:0.9;line-height:1.6;">High salaries and rapid promotions do not always lead to fulfillment. Each executive found that personal values, mental health, and meaningful work ultimately mattered more than corporate success.</p>
+            </div>
+            <div class="two-col">
+                <div class="col-box" style="background:#ffebee;border-left:4px solid #f44336;">
+                    <strong style="color:#c62828;">⚠️ Warning Signs of Burnout</strong>
+                    <ul>
+                        <li>Emotional exhaustion</li>
+                        <li>Cynicism toward work</li>
+                        <li>Feeling of ineffectiveness</li>
+                        <li>Physical symptoms (insomnia, fatigue)</li>
+                    </ul>
+                </div>
+                <div class="col-box" style="background:#e8f5e9;border-left:4px solid #4caf50;">
+                    <strong style="color:#2e7d32;">✅ Strategies to Beat It</strong>
+                    <ul>
+                        <li>Set clear boundaries</li>
+                        <li>Learn to delegate</li>
+                        <li>Take regular breaks / sabbaticals</li>
+                        <li>Align work with personal values</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="background:#fafafa;padding:20px;border-radius:10px;text-align:center;margin-top:16px;">
+                <p style="margin:0;color:#666;font-style:italic;font-size:15px;">"It's not the load that breaks you down, it's the way you carry it."</p>
+                <p style="margin:8px 0 0 0;color:#999;font-size:12px;">— Lou Holtz</p>
+            </div>
+        `
+    }
+];
+
+let current = 0;
+
+function render() {
+    document.getElementById('content').innerHTML = `<h2 class="slide-title">${slides[current].title}</h2>${slides[current].html}`;
+    document.getElementById('counter').textContent = `${current + 1} / ${slides.length}`;
+    document.getElementById('btnPrev').disabled = current === 0;
+    document.getElementById('btnNext').disabled = current === slides.length - 1;
+    
+    const dots = document.getElementById('dots');
+    dots.innerHTML = slides.map((_, i) => 
+        `<div class="dot ${i === current ? 'active' : ''}" onclick="goTo(${i})"></div>`
+    ).join('');
+}
+
+function nextSlide() { if (current < slides.length - 1) { current++; render(); } }
+function prevSlide() { if (current > 0) { current--; render(); } }
+function goTo(i) { current = i; render(); }
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
+});
+
+render();
+</script>
+
+</body>
+</html>
